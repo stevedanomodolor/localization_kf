@@ -51,7 +51,3 @@ docker build -f Docker/Dockerfile -t stevedan/localization-kf:latest .
 ```  
 
 ---
-
-## References  
-For details on the mathematical relationship between Euler angles and body rates, see:  
-📄 [Relationship Between Euler Angles and Body Rates (BYU)](https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=2324&context=facpub)  

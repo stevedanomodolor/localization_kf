@@ -284,42 +284,117 @@ void EKF::getMeasurementModelAndJacobian(const Measurement &measurement, Eigen::
 }
 
 Eigen::VectorXd EKF::gpsMeasurementFunction(const Eigen::VectorXd &state) {
+    // TODO: Implement GPS measurement model
+    // GPS provides 6 measurements: [x, y, z, vx, vy, vz]
+    // The measurement function h_gps(x) maps the state to expected GPS measurements
+    // For GPS: h_gps = [x, y, z, vx, vy, vz] (direct observation of position and velocity)
+    
     Eigen::VectorXd h(6);
-    h.head<3>() = state.head<3>();     // Position
-    h.tail<3>() = state.segment<3>(3); // Velocity
+    // TODO: Extract position (x, y, z) from state vector
+    // HINT: Use state.head<3>() for first 3 elements
+    // h.head<3>() = ??? 
+    
+    // TODO: Extract velocity (vx, vy, vz) from state vector  
+    // HINT: Use state.segment<3>(3) for elements 3-5
+    // h.tail<3>() = ???
+    
+    // Dummy implementation - replace with actual code
+    h.setZero();
     return h;
 }
 
 Eigen::MatrixXd EKF::gpsMeasurementJacobian(const Eigen::VectorXd &state) {
+    // TODO: Implement GPS measurement Jacobian H_gps
+    // The Jacobian H relates how the measurement changes with respect to state changes
+    // For GPS measurement h = [x, y, z, vx, vy, vz], the Jacobian is:
+    // H_gps = ∂h_gps/∂x where x is the full state vector [x,y,z,vx,vy,vz,φ,θ,ψ,p,q,r]
+    // Since GPS directly observes position and velocity, H_gps has identity matrices
+    
     Eigen::MatrixXd H = Eigen::MatrixXd::Zero(6, STATE_SIZE);
-    H.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity(); // Position
-    H.block<3, 3>(3, 3) = Eigen::Matrix3d::Identity(); // Velocity
+    // TODO: Set position part of Jacobian (rows 0-2, cols 0-2)
+    // HINT: H.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity()
+    // H.block<3, 3>(0, 0) = ???
+    
+    // TODO: Set velocity part of Jacobian (rows 3-5, cols 3-5)
+    // HINT: H.block<3, 3>(3, 3) = Eigen::Matrix3d::Identity()
+    // H.block<3, 3>(3, 3) = ???
+    
+    // Dummy implementation - replace with actual code
     return H;
 }
 
 Eigen::VectorXd EKF::magnetometerMeasurementFunction(const Eigen::VectorXd &state) {
+    // TODO: Implement magnetometer measurement model
+    // Magnetometer measures magnetic heading (yaw angle ψ)
+    // The measurement function h_mag(x) = [ψ] extracts yaw from state
+    // State vector: [x, y, z, vx, vy, vz, φ, θ, ψ, p, q, r]
+    //                                      ^     ^  ^
+    //                                      6     7  8  <- indices
+    
     Eigen::VectorXd h(1);
-    h(0) = state(8); // Yaw (psi)
+    // TODO: Extract yaw angle (ψ) from state vector
+    // HINT: Yaw is at index 8 in the state vector
+    // h(0) = state(???);
+    
+    // Dummy implementation - replace with actual code
+    h(0) = 0.0;
     return h;
 }
 
 Eigen::MatrixXd EKF::magnetometerMeasurementJacobian(const Eigen::VectorXd &state) {
+    // TODO: Implement magnetometer measurement Jacobian H_mag
+    // For magnetometer measurement h_mag = [ψ], the Jacobian is:
+    // H_mag = ∂h_mag/∂x = [0 0 0 0 0 0 0 0 1 0 0 0] (1x12 matrix)
+    // Only the yaw component (index 8) has a derivative of 1
+    
     Eigen::MatrixXd H = Eigen::MatrixXd::Zero(1, STATE_SIZE);
-    H(0, 8) = 1.0; // Yaw (psi)
+    // TODO: Set the Jacobian element for yaw measurement
+    // HINT: H(0, 8) = 1.0 since ∂ψ/∂ψ = 1
+    // H(0, ???) = ???;
+    
+    // Dummy implementation - replace with actual code
     return H;
 }
 
 Eigen::VectorXd EKF::altimeterMeasurementFunction(const Eigen::VectorXd &state) {
+    // TODO: Implement altimeter measurement model
+    // Altimeter (barometer) measures altitude and vertical velocity: [z, vz]
+    // The measurement function h_alt(x) = [z, vz] extracts altitude and vertical velocity
+    // State vector: [x, y, z, vx, vy, vz, φ, θ, ψ, p, q, r]
+    //                    ^           ^
+    //                    2           5  <- indices
+    
     Eigen::VectorXd h(2);
-    h(0) = state(2); // Altitude (z)
-    h(1) = state(5); // Vertical velocity (vz)
+    // TODO: Extract altitude (z) from state vector
+    // HINT: Altitude is at index 2 in the state vector
+    // h(0) = state(???);
+    
+    // TODO: Extract vertical velocity (vz) from state vector
+    // HINT: Vertical velocity is at index 5 in the state vector  
+    // h(1) = state(???);
+    
+    // Dummy implementation - replace with actual code
+    h.setZero();
     return h;
 }
 
 Eigen::MatrixXd EKF::altimeterMeasurementJacobian(const Eigen::VectorXd &state) {
+    // TODO: Implement altimeter measurement Jacobian H_alt
+    // For altimeter measurement h_alt = [z, vz], the Jacobian is:
+    // H_alt = ∂h_alt/∂x = [[0 0 1 0 0 0 0 0 0 0 0 0],     <- ∂z/∂x
+    //                      [0 0 0 0 0 1 0 0 0 0 0 0]]      <- ∂vz/∂x
+    // Only z (index 2) and vz (index 5) components have derivatives of 1
+    
     Eigen::MatrixXd H = Eigen::MatrixXd::Zero(2, STATE_SIZE);
-    H(0, 2) = 1.0; // Altitude (z)
-    H(1, 5) = 1.0; // Vertical velocity (vz)
+    // TODO: Set the Jacobian element for altitude measurement
+    // HINT: H(0, 2) = 1.0 since ∂z/∂z = 1
+    // H(0, ???) = ???;
+    
+    // TODO: Set the Jacobian element for vertical velocity measurement
+    // HINT: H(1, 5) = 1.0 since ∂vz/∂vz = 1
+    // H(1, ???) = ???;
+    
+    // Dummy implementation - replace with actual code
     return H;
 }
 
@@ -356,38 +431,44 @@ Eigen::Matrix3d EKF::eulerRateTransformationMatrix(Eigen::VectorXd euler_angles)
 }
 
 Eigen::VectorXd EKF::stateFunction(const Eigen::VectorXd &state, const Eigen::VectorXd &control_input, double dt) {
-    // Extract state components (15 states: x, y, z, vx, vy, vz, roll, pitch, yaw, p, q, r)
-    Eigen::Vector3d position = state.segment<3>(0);      // x, y, z
-    Eigen::Vector3d velocity = state.segment<3>(3);      // vx, vy, vz
-    Eigen::Vector3d euler_angles = state.segment<3>(6);  // roll, pitch, yaw
-    Eigen::Vector3d angular_rates = state.segment<3>(9); // p, q, r
+    // TODO: Implement state transition function f(x, u, dt)
+    // This is the core of the EKF prediction step!
+    // State vector x = [x, y, z, vx, vy, vz, φ, θ, ψ, p, q, r]
+    // Control input u = [ax_body, ay_body, az_body, p, q, r] (IMU data)
+    
+    Eigen::Vector3d position = state.segment<3>(???);      // x, y, z
+    Eigen::Vector3d velocity = state.segment<3>(???);      // vx, vy, vz  
+    Eigen::Vector3d euler_angles = state.segment<3>(???);  // roll, pitch, yaw
+    Eigen::Vector3d angular_rates = state.segment<3>(???); // p, q, r
 
    
+    // TODO: Compute rotation matrix from body frame to world frame
+    // This transforms body frame accelerations to world frame
     Eigen::Matrix3d R = rotationMatrixBodyToWorld(euler_angles);
 
-    // Euler rate transformation matrix
     Eigen::Matrix3d T = eulerRateTransformationMatrix(euler_angles);
     Eigen::Vector3d euler_rate = T * angular_rates;
 
     Eigen::VectorXd next_state(STATE_SIZE);
-
-    // Control inputs: ax, ay, az (body frame)
     Eigen::Vector3d body_acceleration = control_input.segment<3>(0);
-    Eigen::Vector3d acceleration = R * body_acceleration; // Convert to world frame
 
-    // Constant acceleration model
-    // Position update: p_k+1 = p_k + v_k*dt
-    next_state.segment<3>(0) = position + velocity * dt;
+    // TODO: Transform body frame acceleration to world frame
+    // HINT: Use the rotation matrix R computed above
+    Eigen::Vector3d acceleration = R * body_acceleration;
 
-    // Velocity update: v_k+1 = v_k + a_k*dt
-    next_state.segment<3>(3) = velocity + acceleration * dt * 0.05;  // 5% influence
+    // TODO: Implement discrete-time state propagation equations
+    
+    // Position update: x_{k+1} = x_k + v_k * dt (constant velocity model)
 
-    // Euler angles update
-    next_state.segment<3>(6) = euler_angles + euler_rate * dt;
+    // Velocity update: v_{k+1} = v_k + a_k * dt (constant acceleration model)
+    // Note: 0.05 is a scaling factor to reduce acceleration influence
 
-    // Angular rates remain approximately constant (no angular acceleration model)
-    next_state.segment<3>(9) = angular_rates;
+    // Euler angles update: θ_{k+1} = θ_k + θ̇_k * dt 
 
+    // Angular rates update: ω_{k+1} = ω_k (constant angular rate model)
+
+    // Dummy implementation - replace with actual code
+    next_state = state; // Just return current state as dummy
     return next_state;
 }
 
