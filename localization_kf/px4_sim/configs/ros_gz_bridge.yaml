@@ -1,0 +1,40 @@
+# replace clock_bridge
+- topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+  
+  # replace imu_bridge - check gz topic name
+- topic_name: "/imu/data"
+  ros_type_name: "sensor_msgs/msg/Imu"
+  gz_type_name: "gz.msgs.IMU"
+  direction: GZ_TO_ROS
+
+# replace navsat_bridge - check gz topic name
+- topic_name: "/gps/fix"
+  ros_type_name: "gps_msgs/msg/GPSFix"
+  gz_type_name: "gz.msgs.NavSat"
+  direction: GZ_TO_ROS
+
+# - topic_name: "/navsat/fix"
+#   ros_type_name: "sensor_msgs/msg/NavSatFix"
+#   gz_type_name: "gz.msgs.NavSat"
+#   direction: GZ_TO_ROS
+
+# replace /odom_ground_truth - check gz topic name
+- topic_name: "/odom_ground_truth"
+  ros_type_name: "nav_msgs/msg/Odometry"
+  gz_type_name: "gz.msgs.Odometry"
+  direction: GZ_TO_ROS
+
+# replace magnetometer_bridge - check gz topic name
+- topic_name: "/magnetometer/data"
+  ros_type_name: "sensor_msgs/msg/MagneticField"
+  gz_type_name: "gz.msgs.Magnetometer"
+  direction: GZ_TO_ROS
+
+# add altimeter_bridge
+- topic_name: "/altimeter/data"
+  ros_type_name: "ros_gz_interfaces/msg/Altimeter"
+  gz_type_name: "gz.msgs.Altimeter"
+  direction: GZ_TO_ROS

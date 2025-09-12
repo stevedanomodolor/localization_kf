@@ -1,0 +1,7 @@
+<library path="localization_kf_rviz_plugin">
+    <class name="localization_kf_rviz_plugin/NavigationPanel" 
+            type="localization_kf_rviz_plugin::NavigationPanel"
+            base_class_type="rviz_common::Panel">
+        <description>Navigation panel for localization kf</description>
+    </class>
+</library>

@@ -1,0 +1,67 @@
+localization_core:
+  ros__parameters:
+    frequency: 100.0
+    
+    sensor_timeout: 0.2
+
+    base_offset: 0.24
+
+    process_noise_cov: [
+    # 12-state system: x, y, z, vx, vy, vz, roll, pitch, yaw, p, q, r
+    
+      0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # x position
+      0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # y position
+      0.0, 0.0, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # z position (INCREASED!)
+      0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # vx velocity
+      0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # vy velocity
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  # vz velocity (INCREASED!)
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0,  # roll
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0,  # pitch
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0,  # yaw
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.0, 0.0,  # roll_rate (p)
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.0,  # pitch_rate (q)
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05,  # yaw_rate (r)
+    ]
+
+
+    # sensor stddev - matching model.sdf exactly
+    gps_stddev: [
+    # position horizontal stddev (degrees) - from model.sdf navsat
+      0.0000001,  # Increased from 0.0000001 to allow smoother position updates
+    # position vertical stddev (m) - from model.sdf navsat
+      0.01,      # Increased from 0.01 for more realistic altitude uncertainty  
+    # horizontal velocity stddev (m/s) - from model.sdf navsat
+      0.01,      # Increased from 0.01 for more realistic velocity uncertainty
+    # vertical velocity stddev (m/s) - from model.sdf navsat
+      0.01       # Increased from 0.01 for more realistic velocity uncertainty
+    ]
+
+    # IMU measurement stddev (used when IMU is measurement, not just control input)
+    imu_stddev: [
+    # accelerometer stddev (m/s²) - from model.sdf imu
+      0.01,  # accel_x
+      0.01,  # accel_y  
+      0.01,  # accel_z
+    # gyroscope stddev (rad/s) - from model.sdf imu
+      0.001, # gyro_x
+      0.001, # gyro_y
+      0.001  # gyro_z
+    ]
+
+    # magnetic field stddev - matching model.sdf exactly  
+    magnetic_field_stddev: [
+    # magnetic field x stddev (gauss) - from model.sdf magnetometer
+      0.01,
+    # magnetic field y stddev (gauss) - from model.sdf magnetometer
+      0.01,
+    # magnetic field z stddev (gauss) - from model.sdf magnetometer
+      0.01,
+    ]
+
+    # altimeter stddev - matching model.sdf exactly
+    altimeter_stddev: [
+    # altitude stddev (m) - from model.sdf altimeter
+      0.01,
+    # vertical velocity stddev (m/s) - from model.sdf altimeter  
+      0.01
+    ]

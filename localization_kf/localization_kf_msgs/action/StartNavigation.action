@@ -1,0 +1,17 @@
+# goal definition
+int64 CIRCLE=0
+int64 SQUARE = 1
+int64 FIGURE8 = 2
+
+int64 trajectory
+
+---
+# result definition
+
+bool success
+string message
+
+---
+
+# feedback definition
+string status

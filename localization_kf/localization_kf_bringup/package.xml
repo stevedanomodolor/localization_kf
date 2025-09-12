@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>localization_kf_bringup</name>
+  <version>0.0.0</version>
+  <description>Bringup package for localization_kf: installs launch files, RViz configurations and parameter files for demo execution.</description>
+  <maintainer email="stevedan.o.omodolor@gmail.com">Stevedan Ogochukwu Omodolor</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <build_depend>ament_cmake_ros</build_depend>
+
+  <!-- Packages used/required at runtime -->
+  <depend>localization_kf_rviz_plugin</depend>
+  <depend>localization_kf_navigator</depend>
+  <depend>px4_sim</depend>
+  <depend>rclpy</depend>
+  <depend>rclcpp</depend>
+  <depend>launch</depend>
+  <depend>launch_ros</depend>
+  <depend>rviz2</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
