@@ -22,7 +22,7 @@ namespace localization_kf_navigator
     _map_frame_id = "map";
     _gps_frame_id = "gps";
     _base_frame_id = "base_link";
-    _max_range = 500.0;
+    _max_range = 75.0;
 
     auto node = shared_from_this();
 
