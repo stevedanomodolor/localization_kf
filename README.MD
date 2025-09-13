@@ -15,7 +15,12 @@ Follow the official installation guide:
 docker pull stevedan/localization-kf:latest
 ```  
 
-### 3. Run the Container (Terminal 1)  
+### 3. Run xhost to allow GUI from docker(Any terminal)
+```bash
+xhost +local:root
+```
+
+### 4. Run the Container (Terminal 1)  
 ```bash
 docker run -it --rm \
     --name localization-kf \
@@ -35,7 +40,7 @@ source /entrypoint
 ros2 launch px4_sim px4_sim.launch.py
 ```  
 
-### 4. Launch Navigator + EKF Nodes (Terminal 2)  
+### 5. Launch Navigator + EKF Nodes (Terminal 2)  
 In another terminal:  
 ```bash
 docker exec -it localization-kf bash
@@ -48,6 +53,3 @@ ros2 launch localization_kf_bringup bringup.launch.py
 If you need to rebuild the image from source:  
 ```bash
 docker build -f Docker/Dockerfile -t stevedan/localization-kf:latest .
-```  
-
----
